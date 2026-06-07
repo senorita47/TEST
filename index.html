@@ -1,694 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Release 26.R2 — Team Activity, June 14 | Logitude World</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy:  #19395C;
-    --blue:  #369CFB;
-    --red:   #C5234A;
-    --white: #FFFFFF;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logitude World | Operations Mission</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-pink: #D1134E;
+            --bright-blue: #0073C3;
+            --dark-gray: #6E6E6E;
+            --garden-green: #A8D5BA;
+            --soft-bg: #f2f7f4;
+        }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #0d1117; font-family: 'Nunito', sans-serif; overflow-x: hidden; min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ══════════════════════════════════════
-     SCENE 1 · TERMINAL  (0 → 8 s, fast)
-  ══════════════════════════════════════ */
-  #scene-terminal {
-    position: fixed; inset: 0;
-    background: #08111e;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    z-index: 100;
-    animation: terminalExit 0.5s ease-in 8s forwards;
-  }
-  @keyframes terminalExit { to { opacity: 0; pointer-events: none; } }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--soft-bg);
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            /* Digital Garden Aesthetic */
+            background-image: 
+                radial-gradient(var(--garden-green) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(168, 213, 186, 0.1) 0%, rgba(242, 247, 244, 1) 100%);
+            background-size: 40px 40px, 100% 100%;
+        }
 
-  .monitor-wrap {
-    perspective: 900px;
-    animation: monitorFloat 3s ease-in-out infinite;
-  }
-  @keyframes monitorFloat {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-10px); }
-  }
+        /* --- Logistics Background Decorations --- */
+        .tree-decor {
+            position: fixed;
+            font-size: 3rem;
+            opacity: 0.2;
+            z-index: -1;
+            filter: grayscale(0.5);
+        }
 
-  .monitor {
-    width: 600px;
-    background: #0b1828;
-    border-radius: 16px;
-    border: 2px solid #1a3050;
-    box-shadow:
-      0 0 50px rgba(54,156,251,0.18),
-      0 0 0 1px rgba(54,156,251,0.08),
-      0 40px 80px rgba(0,0,0,0.7);
-    transform: rotateX(4deg);
-    overflow: hidden;
-  }
+        /* --- Header --- */
+        header {
+            background: white;
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
 
-  .monitor-bar {
-    background: #0d1e30;
-    padding: 10px 16px;
-    display: flex; align-items: center; gap: 8px;
-    border-bottom: 1px solid #1a3050;
-  }
-  .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
-  .monitor-title {
-    font-family: 'Share Tech Mono', monospace;
-    color: #369CFB; font-size: 12px; margin-left: 8px; opacity: 0.7;
-  }
+        .logo { height: 100px; }
 
-  .terminal-body {
-    padding: 18px 22px;
-    min-height: 270px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px; line-height: 1.9; color: #c9d1d9;
-  }
+        /* --- Hero --- */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(135deg, white 0%, var(--soft-bg) 100%);
+        }
 
-  .line { opacity: 0; display: block; }
-  .line-prompt  { color: #369CFB; }
-  .line-info    { color: #7ec8fc; }
-  .line-warn    { color: #f0a830; }
-  .line-success { color: #5cd97a; font-weight: bold; }
+        .hero h1 {
+            font-size: 40px;
+            color: var(--bright-blue);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.5rem;
+        }
 
-  .line:nth-child(1)  { animation: fadeIn .08s  0.3s forwards; }
-  .line:nth-child(2)  { animation: fadeIn .08s  0.8s forwards; }
-  .line:nth-child(3)  { animation: fadeIn .08s  1.2s forwards; }
-  .line:nth-child(4)  { animation: fadeIn .08s  1.6s forwards; }
-  .line:nth-child(5)  { animation: fadeIn .08s  2.1s forwards; }
-  .line:nth-child(6)  { animation: fadeIn .08s  2.6s forwards; }
-  .line:nth-child(7)  { animation: fadeIn .08s  3.1s forwards; }
-  .line:nth-child(8)  { animation: fadeIn .08s  3.5s forwards; }
-  @keyframes fadeIn { to { opacity: 1; } }
+        .p-size{
+            font-size: 25px;
+        }
 
-  .progress-bar-wrap {
-    opacity: 0; animation: fadeIn .2s 3.7s forwards; margin: 4px 0;
-  }
-  .pb-label { color: rgba(54,156,251,0.55); font-size: 11px; margin-bottom: 4px; }
-  .pb-bg {
-    background: #0d1e30; border-radius: 4px;
-    height: 10px; border: 1px solid #1a3050; overflow: hidden;
-  }
-  .pb-fill {
-    height: 100%; width: 0%;
-    background: linear-gradient(90deg, var(--navy), var(--blue));
-    border-radius: 4px;
-    animation: fillBar 1.8s linear 3.9s forwards;
-  }
-  @keyframes fillBar { to { width: 100%; } }
+        /* --- Timeline Engine --- */
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 40px 0;
+        }
 
-  .line:nth-child(10) { animation: fadeIn .08s 5.8s forwards; }
-  .line:nth-child(11) { animation: fadeIn .08s 6.2s forwards; }
-  .line:nth-child(12) { animation: fadeIn .15s 6.5s forwards; }
+        .main-route {
+            position: absolute;
+            left: 50%;
+            width: 6px;
+            height: 100%;
+            background: #ddd;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
 
-  .success-banner {
-    opacity: 0;
-    background: #071020;
-    border: 1px solid var(--blue);
-    border-radius: 8px;
-    padding: 9px 16px; margin-top: 8px;
-    text-align: center; color: var(--blue);
-    font-size: 14px; letter-spacing: 2px;
-    animation: fadeIn .4s 6.8s forwards, pulsBlue .9s ease-in-out 6.8s 2;
-  }
-  @keyframes pulsBlue {
-    0%,100% { box-shadow: 0 0 0 0 rgba(54,156,251,0); }
-    50%      { box-shadow: 0 0 22px 5px rgba(54,156,251,0.4); }
-  }
+        .progress-line {
+            position: absolute;
+            left: 50%;
+            width: 6px;
+            height: 0%;
+            background: var(--dark-pink);
+            transform: translateX(-50%);
+            transition: height 0.1s linear;
+            box-shadow: 0 0 15px var(--dark-pink);
+        }
 
-  .cursor {
-    display: inline-block; width: 8px; height: 13px;
-    background: var(--blue);
-    animation: blink .8s step-end infinite;
-    vertical-align: middle; margin-left: 2px;
-  }
-  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+        /* --- Activity Cards --- */
+        .card {
+            width: 42%;
+            background: white;
+            padding: 1.5rem;
+            margin: 50px 0;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.6s all ease-out;
+        }
 
-  .character-wrap { margin-top: 16px; display: flex; justify-content: center; }
-  .char-svg {
-    width: 60px; height: 74px;
-    animation: charJump .55s ease-out 7.2s forwards;
-    transform-origin: bottom center;
-  }
-  @keyframes charJump {
-    0%   { transform: translateY(0) rotate(0deg); }
-    30%  { transform: translateY(-28px) rotate(-8deg); }
-    60%  { transform: translateY(-46px) rotate(8deg); }
-    80%  { transform: translateY(-18px) rotate(-3deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-  }
-  .monitor-stand {
-    width: 76px; height: 22px; background: #0d1e30;
-    border-radius: 0 0 8px 8px; margin: 0 auto;
-    border: 2px solid #1a3050; border-top: none;
-  }
-  .monitor-base { width: 136px; height: 7px; background: #1a3050; border-radius: 4px; margin: 0 auto; }
+        .card.visible { opacity: 1; transform: translateY(0); }
 
-  .confetti-container {
-    position: fixed; inset: 0; pointer-events: none; z-index: 99;
-    opacity: 0; animation: fadeIn .4s 7.2s forwards;
-  }
-  .confetto { position: absolute; border-radius: 2px; animation: fall linear forwards; }
-  @keyframes fall {
-    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0.3; }
-  }
+        .card.left { float: left; border-right: 5px solid var(--bright-blue); }
+        .card.right { float: right; border-left: 5px solid var(--dark-pink); }
 
-  /* ══════════════════════════════════════════
-     SCENE 1.5 · LOGITUDE LOADING  (8.3 → 15 s)
-  ══════════════════════════════════════════ */
-  #scene-logitude {
-    position: fixed; inset: 0;
-    background: var(--white);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 50; opacity: 0; pointer-events: none;
-    animation: lgEnter .7s ease-out 8.3s forwards, lgExit .5s ease-in 15s forwards;
-  }
-  @keyframes lgEnter { to { opacity: 1; } }
-  @keyframes lgExit  { to { opacity: 0; } }
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: block;
+        }
 
-  .world-map-bg {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden; pointer-events: none;
-  }
-  .world-map-bg svg { width: 92%; max-width: 1020px; }
+        .card h3 { 
+            font-family: 'JetBrains Mono', monospace; 
+            color: var(--bright-blue);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
 
-  .lg-routes {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    pointer-events: none; overflow: hidden;
-  }
-  .rblue {
-    stroke: var(--blue); stroke-width: 1.8; fill: none;
-    stroke-dasharray: 10 7; opacity: 0.32;
-    stroke-dashoffset: 1200; animation: routeDraw 2.2s ease-out 8.8s forwards;
-  }
-  .rred {
-    stroke: var(--red); stroke-width: 1.8; fill: none;
-    stroke-dasharray: 10 7; opacity: 0.26;
-    stroke-dashoffset: 1200; animation: routeDraw 2.8s ease-out 9.1s forwards;
-  }
-  .rblue2 {
-    stroke: var(--blue); stroke-width: 1.4; fill: none;
-    stroke-dasharray: 8 6; opacity: 0.15;
-    stroke-dashoffset: 1200; animation: routeDraw 3s ease-out 9.4s forwards;
-  }
-  @keyframes routeDraw { to { stroke-dashoffset: 0; } }
+        .card p { font-size: 0.9rem; color: var(--dark-gray); line-height: 1.4; }
 
-  .lg-icon {
-    position: absolute; pointer-events: none;
-    animation: iconBobble ease-in-out infinite;
-  }
-  @keyframes iconBobble {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-10px); }
-  }
+        /* --- Delivery Confirmation --- */
+        .mission-complete {
+            clear: both;
+            text-align: center;
+            padding: 5rem 1rem;
+        }
 
-  .lg-card {
-    position: relative; z-index: 10;
-    text-align: center; padding: 24px;
-    max-width: 560px; width: 100%;
-  }
+        .stamp {
+            display: inline-block;
+            border: 4px solid var(--dark-pink);
+            color: var(--dark-pink);
+            padding: 1rem 2rem;
+            font-weight: 800;
+            font-size: 2rem;
+            transform: rotate(-10deg);
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
 
-  .lg-logo {
-    display: inline-flex; align-items: center; gap: 12px;
-    margin-bottom: 28px; opacity: 0;
-    animation: fadeIn .5s 8.7s forwards;
-  }
-  .lg-logo-wordmark {
-    font-family: 'Nunito', sans-serif;
-    font-size: 30px; font-weight: 900;
-    color: var(--navy); letter-spacing: -0.5px;
-  }
+        .EmptyLine{
+            height: 100px;
+        }
 
-  .lg-loading-title {
-    font-family: 'Nunito', sans-serif;
-    font-size: 34px; font-weight: 900; color: #111;
-    margin-bottom: 10px; opacity: 0;
-    animation: fadeIn .4s 8.9s forwards;
-  }
-  .lg-sub1 {
-    font-size: 15px; color: #555; margin-bottom: 4px;
-    opacity: 0; animation: fadeIn .4s 9.1s forwards;
-  }
-  .lg-sub2 {
-    font-size: 15px; color: #555; margin-bottom: 44px;
-    opacity: 0; animation: fadeIn .4s 9.3s forwards;
-  }
-
-  .lg-progress-wrap {
-    width: 480px; max-width: 88vw;
-    margin: 0 auto; position: relative;
-    opacity: 0; animation: fadeIn .4s 9.5s forwards;
-  }
-  .lg-pb-track {
-    height: 5px; background: #DDE3EC;
-    border-radius: 3px; position: relative; overflow: visible;
-  }
-  .lg-pb-fill {
-    height: 100%; width: 0%;
-    background: var(--blue); border-radius: 3px;
-    animation: lgBarFill 4.5s ease-in-out 9.7s forwards;
-  }
-  @keyframes lgBarFill { to { width: 100%; } }
-
-  .lg-plane-icon {
-    position: absolute; top: -17px; left: 0%;
-    font-size: 20px; line-height: 1; color: var(--blue);
-    transform: translateX(-50%);
-    animation: lgPlaneFly 4.5s ease-in-out 9.7s forwards;
-  }
-  @keyframes lgPlaneFly { to { left: 100%; } }
-
-  .lg-percent-val {
-    color: var(--blue); font-size: 20px; font-weight: 800;
-    margin-top: 18px; font-family: 'Nunito', sans-serif;
-    opacity: 0; animation: fadeIn .3s 10s forwards;
-  }
-
-  /* ══════════════════════════════════════
-     SCENE 2 · PARTY  (15.3 s →)
-  ══════════════════════════════════════ */
-  #scene-party {
-    min-height: 100vh;
-    background: linear-gradient(160deg, #040c16 0%, #091828 45%, #0e0a1a 100%);
-    opacity: 0; pointer-events: none;
-    animation: partyEnter 1s ease-out 15.3s forwards;
-    position: relative; overflow: hidden;
-  }
-  @keyframes partyEnter { to { opacity:1; pointer-events:all; } }
-
-  .orb {
-    position: absolute; border-radius: 50%;
-    filter: blur(60px); animation: orbFloat ease-in-out infinite;
-  }
-  .orb1 { width:360px;height:360px;background:rgba(25,57,92,0.55);top:-120px;left:-60px;animation-duration:8s; }
-  .orb2 { width:210px;height:210px;background:rgba(197,35,74,0.22);top:220px;right:-60px;animation-duration:6s; }
-  .orb3 { width:290px;height:290px;background:rgba(54,156,251,0.14);bottom:80px;left:80px;animation-duration:10s; }
-  @keyframes orbFloat {
-    0%,100% { transform: translateY(0) scale(1); }
-    50%      { transform: translateY(-28px) scale(1.07); }
-  }
-
-  .grid-bg {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(54,156,251,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(54,156,251,0.05) 1px, transparent 1px);
-    background-size: 60px 60px; pointer-events: none;
-  }
-
-  .party-content {
-    position: relative; z-index: 10;
-    max-width: 720px; margin: 0 auto;
-    padding: 52px 24px; text-align: center;
-  }
-
-  .badge-release {
-    display: inline-block;
-    background: rgba(54,156,251,0.14);
-    border: 1px solid rgba(54,156,251,0.5);
-    color: #7ec8fc; font-size: 13px;
-    font-family: 'Share Tech Mono', monospace;
-    padding: 5px 16px; border-radius: 20px; margin-bottom: 22px;
-    animation: slideUp .6s ease-out 16.5s both;
-  }
-
-  .headline {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(44px, 9vw, 76px);
-    line-height: 1.05; color: var(--white); margin-bottom: 14px;
-    animation: slideUp .7s ease-out 16.8s both;
-  }
-  .headline span {
-    background: linear-gradient(135deg, var(--blue) 0%, #7ec8fc 45%, var(--red) 85%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-
-  .sub {
-    color: rgba(255,255,255,0.58); font-size: 17px; line-height: 1.65;
-    margin-bottom: 44px; animation: slideUp .7s ease-out 17.1s both;
-  }
-
-  @keyframes slideUp {
-    from { opacity:0; transform: translateY(26px); }
-    to   { opacity:1; transform: translateY(0); }
-  }
-
-  .cards-row {
-    display: flex; flex-wrap: wrap; gap: 16px;
-    justify-content: center; margin-bottom: 44px;
-    animation: slideUp .8s ease-out 17.5s both;
-  }
-  .info-card {
-    background: rgba(255,255,255,0.05); backdrop-filter: blur(14px);
-    border: 1px solid rgba(255,255,255,0.1); border-radius: 22px;
-    padding: 24px 28px; min-width: 160px; flex: 1; max-width: 200px;
-    transition: transform .3s, border-color .3s; cursor: default;
-  }
-  .info-card:hover { transform: translateY(-6px); border-color: rgba(54,156,251,0.45); }
-  .card-icon {
-    font-size: 36px; display: block; margin-bottom: 10px;
-    animation: iconBounce 2.5s ease-in-out infinite;
-  }
-  .info-card:nth-child(2) .card-icon { animation-delay: .4s; }
-  .info-card:nth-child(3) .card-icon { animation-delay: .8s; }
-  @keyframes iconBounce {
-    0%,100% { transform: translateY(0) rotate(0deg); }
-    40%      { transform: translateY(-6px) rotate(-5deg); }
-    60%      { transform: translateY(-6px) rotate(5deg); }
-  }
-  .card-label {
-    color: rgba(255,255,255,0.38); font-size: 10px;
-    letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 5px;
-  }
-  .card-value { color: var(--white); font-size: 16px; font-weight: 700; line-height: 1.35; }
-
-  .food-note {
-    background: rgba(255,193,7,0.07); border: 1px solid rgba(255,193,7,0.22);
-    border-radius: 16px; padding: 18px 26px;
-    color: rgba(255,255,255,0.8); font-size: 15px;
-    margin-bottom: 44px; line-height: 1.6;
-    animation: slideUp .8s ease-out 17.9s both;
-  }
-  .food-note strong { color: #FFD54F; }
-
-  .transport-section {
-    background: rgba(25,57,92,0.35);
-    border: 1px solid rgba(54,156,251,0.25);
-    border-radius: 26px; padding: 34px; margin-bottom: 28px;
-    animation: slideUp .8s ease-out 18.3s both;
-  }
-  .transport-title { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--white); margin-bottom: 8px; }
-  .transport-sub {
-    color: rgba(255,255,255,0.38); font-size: 13px;
-    margin-bottom: 30px; font-family: 'Share Tech Mono', monospace;
-  }
-
-  .transport-options { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .transport-btn {
-    flex: 1; min-width: 230px; padding: 24px 20px;
-    border-radius: 20px; border: 2px solid transparent;
-    cursor: pointer; transition: all .25s;
-    text-align: center; font-family: 'Nunito', sans-serif; font-size: 15px;
-  }
-  .btn-self {
-    background: rgba(54,156,251,0.1); border-color: rgba(54,156,251,0.38); color: var(--white);
-  }
-  .btn-self:hover {
-    background: rgba(54,156,251,0.2); border-color: rgba(54,156,251,0.85);
-    transform: translateY(-4px); box-shadow: 0 8px 28px rgba(54,156,251,0.22);
-  }
-  .btn-us {
-    background: rgba(197,35,74,0.1); border-color: rgba(197,35,74,0.38); color: var(--white);
-  }
-  .btn-us:hover {
-    background: rgba(197,35,74,0.22); border-color: rgba(197,35,74,0.85);
-    transform: translateY(-4px); box-shadow: 0 8px 28px rgba(197,35,74,0.22);
-  }
-  .btn-icon  { font-size: 34px; display: block; margin-bottom: 10px; }
-  .btn-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
-  .btn-desc  { font-size: 13px; color: rgba(255,255,255,0.48); line-height: 1.45; }
-
-  .transport-result {
-    margin-top: 22px; font-size: 15px; color: rgba(255,255,255,0.8);
-    min-height: 40px; transition: all .4s;
-  }
-  .transport-result.show {
-    background: rgba(54,156,251,0.07); border: 1px solid rgba(54,156,251,0.2);
-    border-radius: 14px; padding: 18px 22px;
-  }
-  .result-emoji { font-size: 26px; display: block; margin-bottom: 8px; }
-
-  .footer-note {
-    color: rgba(255,255,255,0.22); font-size: 13px; margin-top: 36px;
-    font-family: 'Share Tech Mono', monospace;
-    animation: slideUp .8s ease-out 18.7s both;
-  }
-
-  .stars { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .star {
-    position: absolute; width: 2px; height: 2px;
-    background: var(--white); border-radius: 50%;
-    animation: twinkle ease-in-out infinite;
-  }
-  @keyframes twinkle {
-    0%,100% { opacity:.15; transform:scale(1); }
-    50%      { opacity:.9;  transform:scale(1.6); }
-  }
-</style>
+        @media (max-width: 768px) {
+            .main-route, .progress-line { left: 30px; }
+            .card { width: 80%; float: right !important; margin-right: 10px; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════
-     SCENE 1 · TERMINAL DEPLOY
-════════════════════════════════════ -->
-<div id="scene-terminal">
-  <div class="monitor-wrap">
-    <div class="monitor">
-      <div class="monitor-bar">
-        <div class="dot dot-r"></div>
-        <div class="dot dot-y"></div>
-        <div class="dot dot-g"></div>
-        <span class="monitor-title">logitude-world — release-26.R2-deploy.sh</span>
-      </div>
-      <div class="terminal-body">
-        <span class="line"><span class="line-prompt">➜  logitude-world git:</span>(release/26.R2) <span style="color:#7ec8fc">git</span> push origin release/26.R2</span>
-        <span class="line"><span class="line-info">Enumerating objects: 512, done. Writing: 100% (512/512) 🚀</span></span>
-        <span class="line"><span class="line-prompt">➜</span> <span style="color:#7ec8fc">./deploy.sh</span> --release=26.R2 --env=production --target=logitude-world</span>
-        <span class="line"><span class="line-warn">⚡  Bundling Logitude World — Release 26.R2...</span></span>
-        <span class="line"><span class="line-warn">🔧  Running 874 test suites... all passed ✓</span></span>
-        <span class="line"><span class="line-warn">🌐  Deploying to Logitude production servers...</span></span>
-        <span class="line"><span class="line-warn">⏳  Propagating across all 14 global regions...</span></span>
-        <span class="line"><span class="line-warn" style="opacity:.4">&nbsp;</span></span>
-        <div class="progress-bar-wrap">
-          <div class="pb-label">Deployment progress — Logitude World Release 26.R2</div>
-          <div class="pb-bg"><div class="pb-fill"></div></div>
+    <!-- Background Elements -->
+    <div class="tree-decor" style="top: 15%; left: 5%;">🌳</div>
+    <div class="tree-decor" style="top: 45%; right: 8%;">🌲</div>
+    <div class="tree-decor" style="bottom: 10%; left: 10%;">🌳</div>
+    <div class="tree-decor" style="top: 30%; left: 80%;">🚚</div>
+
+    <header>
+        <img src="Logo.png" alt="Logitude World" class="logo">
+    </header>
+
+    <section class="hero">
+        <h1>OPERATIONS MISSION: BBQ_DAY</h1>
+        <p class="p-size"><strong>Location:</strong> Zmairo Garden | <strong>Date:</strong> Sunday 14 June</p>
+    </section>
+
+    <div class="timeline-container">
+        <div class="main-route"></div>
+        <div class="progress-line" id="progress"></div>
+
+        <!-- Card 1 -->
+        <div class="card left">
+            <img src="Office.png" alt="Office Check-in">
+            <h3>[01] Office Check-In</h3>
+            <p>Arriving at HQ. Peer-to-peer synchronization with Nables office team members.</p>
         </div>
-        <span class="line"></span>
-        <span class="line"><span class="line-success">✅  All health checks passed — 0 errors, 0 warnings</span></span>
-        <span class="line"><span class="line-success">🏁  Logitude World — Release 26.R2 is LIVE in production!</span></span>
-        <div class="success-banner">🎉 &nbsp; RELEASE 26.R2 — DEPLOY SUCCESSFUL &nbsp; 🎉</div>
-      </div>
-    </div>
-    <div class="monitor-stand"></div>
-    <div class="monitor-base"></div>
-  </div>
 
-  <div class="character-wrap">
-    <svg class="char-svg" viewBox="0 0 64 80" xmlns="http://www.w3.org/2000/svg">
-      <rect x="18" y="32" width="28" height="26" rx="6" fill="#19395C"/>
-      <ellipse cx="32" cy="22" rx="14" ry="14" fill="#fcd5ae"/>
-      <path d="M18 18 Q20 8 32 8 Q44 8 46 18 Q40 12 32 13 Q24 12 18 18Z" fill="#3d2b1f"/>
-      <ellipse cx="26" cy="20" rx="3" ry="3.5" fill="white"/>
-      <ellipse cx="38" cy="20" rx="3" ry="3.5" fill="white"/>
-      <circle cx="27" cy="21" r="1.8" fill="#3d2b1f"/>
-      <circle cx="39" cy="21" r="1.8" fill="#3d2b1f"/>
-      <path d="M25 27 Q32 34 39 27" stroke="#c0845e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <rect x="4"  y="33" width="16" height="8" rx="4" fill="#19395C"/>
-      <rect x="44" y="33" width="16" height="8" rx="4" fill="#19395C"/>
-      <ellipse cx="7"  cy="37" rx="5" ry="5" fill="#fcd5ae"/>
-      <ellipse cx="57" cy="37" rx="5" ry="5" fill="#fcd5ae"/>
-      <rect x="20" y="55" width="10" height="18" rx="5" fill="#0d2040"/>
-      <rect x="34" y="55" width="10" height="18" rx="5" fill="#0d2040"/>
-      <ellipse cx="25" cy="73" rx="7" ry="4" fill="#1a1a1a"/>
-      <ellipse cx="39" cy="73" rx="7" ry="4" fill="#1a1a1a"/>
-    </svg>
-  </div>
-</div>
+        <div class="EmptyLine">
+        </div>
 
-<!-- Confetti -->
-<div class="confetti-container" id="confetti"></div>
+        <!-- Card 2 -->
+        <div class="card right">
+            <img src="BreakFast.png" alt="Breakfast">
+            <h3>[02] Breakfast</h3>
+            <p>High-energy breakfast protocol initialized. Loading pastry assets for the team.</p>
+        </div>
 
-<!-- ════════════════════════════════════
-     SCENE 1.5 · LOGITUDE LOADING
-     (8.3 s → 15 s)
-════════════════════════════════════ -->
-<div id="scene-logitude">
+        <!-- Card 3 -->
+        <div class="card left">
+            <img src="car.png" alt="On the Road">
+            <h3>[03] On the Road</h3>
+            <p>Car convoy transit phase. Initiating route movement toward the garden destination.</p>
+        </div>
 
-  <div class="world-map-bg">
-    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-      <g fill="#19395C" opacity="0.13">
-        <path d="M330 28 L385 18 L418 30 L428 52 L412 68 L380 74 L348 62 L330 46 Z"/>
-        <path d="M95 82 L148 60 L198 54 L242 64 L272 82 L292 106 L300 134 L295 164 L282 196 L265 225 L248 254 L226 270 L205 264 L185 240 L168 208 L148 196 L128 186 L110 162 L92 138 L82 112 Z"/>
-        <path d="M195 268 L218 264 L224 280 L212 298 L198 292 Z"/>
-        <path d="M206 305 L248 294 L282 306 L296 332 L308 364 L302 402 L286 442 L264 458 L242 453 L220 434 L208 398 L203 362 L204 332 Z"/>
-        <path d="M355 52 L385 46 L392 58 L380 68 L358 65 Z"/>
-        <path d="M392 60 L408 56 L414 70 L407 80 L392 74 Z"/>
-        <path d="M445 28 L472 22 L494 34 L498 56 L480 67 L458 60 L443 46 Z"/>
-        <path d="M415 58 L462 50 L504 58 L526 74 L534 96 L522 118 L506 130 L482 136 L456 128 L432 118 L416 96 L413 76 Z"/>
-        <path d="M535 132 L578 126 L598 138 L608 158 L596 174 L568 178 L542 166 L534 148 Z"/>
-        <path d="M425 150 L478 140 L532 150 L560 178 L572 218 L574 264 L560 314 L535 364 L508 408 L488 420 L465 416 L442 398 L420 358 L408 310 L406 262 L411 216 L418 180 Z"/>
-        <path d="M534 52 L625 38 L706 40 L784 50 L844 68 L878 94 L888 130 L876 170 L854 205 L818 234 L778 258 L738 268 L696 262 L656 250 L616 236 L578 216 L553 188 L538 158 L528 122 L526 88 Z"/>
-        <path d="M616 178 L652 172 L675 188 L680 218 L668 252 L645 268 L622 260 L608 236 L606 206 Z"/>
-        <path d="M728 202 L772 196 L804 208 L814 228 L800 248 L770 258 L737 250 L722 232 Z"/>
-        <path d="M856 106 L878 100 L888 116 L880 138 L860 144 L846 128 Z"/>
-        <path d="M752 314 L814 302 L864 318 L882 348 L882 390 L862 420 L820 432 L778 422 L750 396 L740 362 L743 334 Z"/>
-        <path d="M898 390 L915 382 L922 400 L912 416 L897 408 Z"/>
-        <path d="M572 296 L584 290 L590 310 L582 334 L568 328 L565 308 Z"/>
-      </g>
-    </svg>
-  </div>
+        <!-- Card 4 -->
+        <div class="card right">
+            <img src="BBQ.png" alt="BBQ">
+            <h3>[04] BBQ</h3>
+            <p>BBQ script execution. Outdoor resource management and hunger mitigation.</p>
+        </div>
 
-  <svg class="lg-routes" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
-    <path class="rblue" d="M80 250 Q300 120 560 200 Q780 280 1100 160 Q1280 100 1400 200"/>
-    <path class="rred"  d="M60 560 Q260 420 520 500 Q760 580 1020 460 Q1200 380 1380 480"/>
-    <path class="rblue2" d="M120 740 Q380 660 650 710 Q880 760 1180 680 Q1320 640 1420 700"/>
-  </svg>
+        <!-- Card 5 -->
+        <div class="card left">
+            <img src="Card.png" alt="Game On!">
+            <h3>[05] Game On!</h3>
+            <p>Circle-based game logic for 15-20 active nodes. Strategy and logic test phase.</p>
+        </div>
 
-  <div class="lg-icon" style="top:14%;left:7%;font-size:22px;animation-duration:4s;">✈️</div>
-  <div class="lg-icon" style="top:65%;left:4%;font-size:18px;animation-duration:5.5s;animation-delay:.8s;">🚢</div>
-  <div class="lg-icon" style="top:78%;right:5%;font-size:18px;animation-duration:4.5s;animation-delay:.3s;">🚛</div>
-  <div class="lg-icon" style="top:18%;right:8%;font-size:16px;animation-duration:3.8s;animation-delay:1.2s;">✈️</div>
-  <div class="lg-icon" style="top:50%;right:12%;font-size:14px;animation-duration:6s;animation-delay:.6s;">🚢</div>
+        <!-- Card 6 -->
+        <div class="card right">
+            <img src="Gift.png" alt="Goodie Bags">
+            <h3>[06] Goodie Bags</h3>
+            <p>Final mission objective: Successful delivery of end-of-day rewards.</p>
+        </div>
 
-  <div class="lg-card">
-    <div class="lg-logo">
-      <svg width="44" height="38" viewBox="0 0 44 38" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0"    y="20" width="4.5" height="18" rx="2.2" fill="#C5234A"/>
-        <rect x="5.5"  y="11" width="4.5" height="27" rx="2.2" fill="#C5234A"/>
-        <rect x="11"   y="4"  width="4.5" height="34" rx="2.2" fill="#C5234A"/>
-        <rect x="16.5" y="9"  width="4.5" height="29" rx="2.2" fill="#19395C"/>
-        <rect x="22"   y="1"  width="4.5" height="37" rx="2.2" fill="#369CFB"/>
-        <rect x="27.5" y="13" width="4.5" height="25" rx="2.2" fill="#369CFB"/>
-        <rect x="33"   y="21" width="4.5" height="17" rx="2.2" fill="#369CFB"/>
-        <rect x="38.5" y="17" width="4.5" height="21" rx="2.2" fill="#369CFB"/>
-      </svg>
-      <span class="lg-logo-wordmark">Logitude</span>
+        <div style="clear: both; height: 1px;"></div>
     </div>
 
-    <div class="lg-loading-title">Loading...</div>
-    <div class="lg-sub1">Release 26.R2 is officially live. 🎉</div>
-    <div class="lg-sub2">Fasten your seatbelts — we are taking you somewhere fun in just a few seconds!</div>
+    <section class="mission-complete">
+        <div class="stamp">MISSION ACCOMPLISHED</div>
+        <p style="margin-top: 20px;">All logistics operations marked as: <strong>DELIVERED</strong></p>
+    </section>
 
-    <div class="lg-progress-wrap">
-      <div class="lg-pb-track">
-        <div class="lg-pb-fill"></div>
-        <span class="lg-plane-icon">✈</span>
-      </div>
-      <div class="lg-percent-val" id="lg-pct">0 %</div>
-    </div>
-  </div>
-</div>
+    <script>
+        const cards = document.querySelectorAll('.card');
+        const progressLine = document.getElementById('progress');
 
-<!-- ════════════════════════════════════
-     SCENE 2 · PARTY
-════════════════════════════════════ -->
-<div id="scene-party">
-  <div class="stars" id="stars"></div>
-  <div class="grid-bg"></div>
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.3 });
 
-  <div class="party-content">
-    <div class="badge-release">✓ Logitude World &nbsp;·&nbsp; Release 26.R2 &nbsp;·&nbsp; Live in Production</div>
+        cards.forEach(card => observer.observe(card));
 
-    <h1 class="headline">Time to<br><span>Touch Grass! 🌿</span></h1>
-    <p class="sub">
-      The code is shipped. The servers are happy. Logitude World 26.R2 is live.<br>
-      Now it's <em>our</em> time — pack up and let's head outside! 🎉
-    </p>
-
-    <div class="cards-row">
-      <div class="info-card">
-        <span class="card-icon">📅</span>
-        <div class="card-label">Date</div>
-        <div class="card-value">Sunday<br>June 14</div>
-      </div>
-      <div class="info-card">
-        <span class="card-icon">🕐</span>
-        <div class="card-label">Time</div>
-        <div class="card-value">1:00 PM<br>to 6:00 PM</div>
-      </div>
-      <div class="info-card">
-        <span class="card-icon">🌳</span>
-        <div class="card-label">Vibe</div>
-        <div class="card-value">Outdoor<br>Activity</div>
-      </div>
-    </div>
-
-    <div class="food-note">
-      🍕 <strong>Pro tip from the devs:</strong> Fuel your body like you fuel your servers!<br>
-      Feel free to bring your own food &amp; snacks — the more, the merrier. 🥪 🍉 🧁
-    </div>
-
-    <div class="transport-section">
-      <div class="transport-title">✈️ &nbsp; How Are You Getting There?</div>
-      <div class="transport-sub">— choose your deployment strategy for reaching the venue —</div>
-
-      <div class="transport-options">
-        <button class="transport-btn btn-self" onclick="pickTransport(this,'self')">
-          <span class="btn-icon">🧭</span>
-          <div class="btn-title">I'll Handle It!</div>
-          <div class="btn-desc">Self-hosting my commute — got my own ride sorted. See you all there!</div>
-        </button>
-        <button class="transport-btn btn-us" onclick="pickTransport(this,'us')">
-          <span class="btn-icon">🚌</span>
-          <div class="btn-title">Yes Please, Pick Me Up!</div>
-          <div class="btn-desc">I need the team to handle my transport — pickups &amp; drop-offs both ways!</div>
-        </button>
-      </div>
-
-      <div class="transport-result" id="transport-result"></div>
-    </div>
-
-    <div class="footer-note">// see_you_all_june_14 — leave keyboards behind 👾</div>
-  </div>
-</div>
-
-<script>
-  /* Confetti — Logitude palette */
-  const cc = ['#369CFB','#C5234A','#19395C','#7ec8fc','#f07090','#FFD54F','#FFFFFF'];
-  const cf = document.getElementById('confetti');
-  for (let i = 0; i < 100; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetto';
-    c.style.cssText = `left:${Math.random()*100}%;background:${cc[Math.floor(Math.random()*cc.length)]};width:${6+Math.random()*10}px;height:${6+Math.random()*10}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2+Math.random()*3}s;animation-delay:${7.2+Math.random()*2}s;`;
-    cf.appendChild(c);
-  }
-
-  /* Stars */
-  const se = document.getElementById('stars');
-  for (let i = 0; i < 90; i++) {
-    const s = document.createElement('div');
-    s.className = 'star';
-    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*3}s;`;
-    se.appendChild(s);
-  }
-
-  /* % counter — matches 4.5 s bar fill starting at 9.7 s */
-  const pctEl = document.getElementById('lg-pct');
-  setTimeout(() => {
-    let val = 0;
-    const iv = setInterval(() => {
-      val = Math.min(100, val + 1);
-      pctEl.textContent = val + ' %';
-      if (val >= 100) clearInterval(iv);
-    }, 45);
-  }, 9700);
-
-  /* Transport pick */
-  function pickTransport(btn, type) {
-    const el = document.getElementById('transport-result');
-    if (type === 'self') {
-      el.innerHTML = `<span class="result-emoji">🧭</span><strong>Awesome, independent spirit!</strong><br>You're all set — just make sure you're there by <strong>1:00 PM</strong> and ready to have a great time!`;
-    } else {
-      el.innerHTML = `<span class="result-emoji">🚌</span><strong>Great, we've got you covered!</strong><br>Please <strong>send us a message</strong> with your pickup location and we'll sort the route for you. Reach out <em>before June 12</em> so we can plan everything. 📩`;
-    }
-    el.classList.add('show');
-    document.querySelectorAll('.transport-btn').forEach(b => b.style.opacity = '.42');
-    btn.style.opacity = '1';
-    btn.style.transform = 'translateY(-4px) scale(1.02)';
-  }
-</script>
+        window.addEventListener('scroll', () => {
+            const container = document.querySelector('.timeline-container');
+            const scrollPos = window.scrollY;
+            const containerTop = container.offsetTop - (window.innerHeight / 2);
+            const containerHeight = container.offsetHeight;
+            
+            if (scrollPos > containerTop) {
+                const scrolled = ((scrollPos - containerTop) / containerHeight) * 100;
+                progressLine.style.height = Math.min(scrolled, 100) + '%';
+            }
+        });
+    </script>
 </body>
 </html>
